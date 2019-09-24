@@ -1,10 +1,10 @@
 package com.screendead.capital;
 
+import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.lwjgl.stb.STBImage;
 import org.lwjgl.system.MemoryUtil;
 
-import javax.print.DocFlavor;
 import java.net.URLDecoder;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
@@ -20,6 +20,7 @@ import static org.lwjgl.opengl.GL14.GL_TEXTURE_LOD_BIAS;
 import static org.lwjgl.opengl.GL30.glGenerateMipmap;
 
 public class Texture {
+    public static int SIZE = 32;
     private int id, width, height;
     private ByteBuffer raw_image;
 
@@ -118,6 +119,18 @@ public class Texture {
      * @return The height of the image in pixels
      */
     public int getHeight() { return height; }
+
+    /**
+     * @param x The location of the desired sub-texture along the x-axis, measured in sub-texture-count
+     * @param y The location of the desired sub-texture along the y-axis, measured in sub-texture-count
+     * @return The actual location, in pixels, of the top-left coordinate of the xth and yth sub-texture along those respective axes
+     */
+    public Vector2f getTexturePosition(int x, int y) {
+        x -= 1;
+        y -= 1;
+
+        return new Vector2f((float) x / SIZE, (float) y / SIZE);
+    }
 
     /**
      * Bind this image to GL_TEXTURE_2D

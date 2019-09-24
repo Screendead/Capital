@@ -1,5 +1,7 @@
 package com.screendead.capital.graphics;
 
+import com.screendead.capital.Texture;
+import com.screendead.capital.levels.Level;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL;
 
@@ -7,9 +9,10 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.GL_MULTISAMPLE;
 
 public class Renderer {
+    public static Texture TEXTURE;
     private Shader shader;
     private Matrix4f view = new Matrix4f();
-    private Mesh testMesh;
+    private Level level;
 
     /**
      * Render to the framebuffer
@@ -25,9 +28,11 @@ public class Renderer {
 
         // Render the chunk mesh
         shader.bind();
+        TEXTURE.bind();
         {
-                testMesh.render();
+                level.render();
         }
+        Texture.unbind();
         Shader.unbind();
     }
 
@@ -61,10 +66,15 @@ public class Renderer {
 
         // Set the sampler2D to 0
         shader.bind();
-        shader.setUniform("tex", 0);
+        {
+            shader.setUniform("tex", 0);
+        }
         Shader.unbind();
 
-        testMesh = new Mesh("images/atlas.png", 0.0f, 0.0f, 16.0f, 9.0f);
+//        testMesh = new Mesh("images/atlas.png", 0.0f, 0.0f, 16.0f, 9.0f);
+        TEXTURE = new Texture("images/atlas.png");
+
+        level = Level.generate("Test Level");
 
         // Set the clear color
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -86,7 +96,9 @@ public class Renderer {
 
         // Update the viewMatrix in the shader
         shader.bind();
-        shader.setUniform("view", view);
+        {
+            shader.setUniform("view", view);
+        }
         Shader.unbind();
     }
 }

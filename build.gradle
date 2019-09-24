@@ -7,8 +7,10 @@ plugins {
 group "com.screendead.capital"
 version "1.0-SNAPSHOT"
 
-project.ext.lwjglVersion = "3.2.2"
-project.ext.jomlVersion = "1.9.16"
+//project.ext.lwjglVersion = "3.2.2"
+project.ext.lwjglVersion = "3.+"
+project.ext.jomlVersion = "+"
+project.ext.jsonVersion = "+"
 
 switch (OperatingSystem.current()) {
     case OperatingSystem.LINUX:
@@ -35,6 +37,7 @@ dependencies {
     implementation "org.lwjgl:lwjgl-openal:$lwjglVersion"
     implementation "org.lwjgl:lwjgl-opengl:$lwjglVersion"
     implementation "org.lwjgl:lwjgl-stb:$lwjglVersion"
+    implementation "org.json:json:$jsonVersion"
     runtimeOnly "org.lwjgl:lwjgl:$lwjglVersion:$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-assimp:$lwjglVersion:$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-glfw:$lwjglVersion:$lwjglNatives"

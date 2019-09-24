@@ -2,18 +2,11 @@ package com.screendead.capital.graphics;
 
 import com.screendead.capital.Input;
 import com.screendead.capital.Texture;
-import org.joml.Vector2f;
 import org.joml.Vector2i;
-import org.joml.Vector3f;
-import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWImage;
 import org.lwjgl.glfw.GLFWVidMode;
-import org.lwjgl.stb.STBImage;
-import org.lwjgl.system.MemoryStack;
 
-import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
 import java.util.Objects;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -60,7 +53,7 @@ public class Window {
         glfwDefaultWindowHints(); // optional, the current window hints are already the default
         glfwWindowHint(GLFW_SAMPLES, 16); // Enable MSAA
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // The window will stay hidden after creation
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // The window will be resizable
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE); // The window will not be resizable
         glfwWindowHint(GLFW_AUTO_ICONIFY, GLFW_FALSE); // The window will be alt-tabbable without iconifying
 
         // Create a handle for the window
@@ -158,6 +151,7 @@ public class Window {
 //        if (key(GLFW_KEY_SPACE))
 //        if (key(GLFW_KEY_LEFT_SHIFT))
 
+//        camera.update(0.0f, 1.0f / 8.0f * ((float) Math.sin(ticks / 6.0f) / 25.0f + 1.0f), 1.0f / 8.0f * ((float) Math.cos(ticks / 5.0f) / 25.0f + 1.0f));
         camera.update(0.0f, 1.0f / 8.0f);
         input.dx = input.dy = 0;
     }
