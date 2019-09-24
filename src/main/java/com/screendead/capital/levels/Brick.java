@@ -38,4 +38,12 @@ public class Brick {
 
         return new Brick(v, b.getTexture());
     }
+
+    public void render() {
+        mesh.render();
+    }
+
+    public void cleanup() {
+        mesh.cleanup();
+    }
 }

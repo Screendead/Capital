@@ -2,6 +2,7 @@ package com.screendead.capital.graphics;
 
 import com.screendead.capital.Input;
 import com.screendead.capital.Texture;
+import com.screendead.capital.gameplay.Player;
 import org.joml.Vector2i;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWImage;
@@ -23,6 +24,7 @@ public class Window {
     private GLFWVidMode v;
     private int vsync;
     private Camera camera;
+    private Player charlsberg;
 
     public Window(String title, int width, int height, boolean isFullscreen, boolean vsyncEnabled) {
         vsync = (vsyncEnabled) ? 1 : 0;
@@ -77,7 +79,8 @@ public class Window {
         // Set the icon of the window
         setIcon("images/heart.png");
 
-        camera = new Camera(-8.0f, -8.0f, 4.5f, 4.5f, width, height);
+        camera = new Camera(width, height);
+        charlsberg = new Player();
 
         this.autoViewport();
 
@@ -141,18 +144,19 @@ public class Window {
             this.toggleFullscreen();
 
         if (key(GLFW_KEY_W))
-            camera.move(0, -1);
+            charlsberg.move(0, -1);
         if (key(GLFW_KEY_A))
-            camera.move(-1, 0);
+            charlsberg.move(-1, 0);
         if (key(GLFW_KEY_S))
-            camera.move(0, 1);
+            charlsberg.move(0, 1);
         if (key(GLFW_KEY_D))
-            camera.move(1, 0);
+            charlsberg.move(1, 0);
 //        if (key(GLFW_KEY_SPACE))
 //        if (key(GLFW_KEY_LEFT_SHIFT))
 
 //        camera.update(0.0f, 1.0f / 8.0f * ((float) Math.sin(ticks / 6.0f) / 25.0f + 1.0f), 1.0f / 8.0f * ((float) Math.cos(ticks / 5.0f) / 25.0f + 1.0f));
         camera.update(0.0f, 1.0f / 8.0f);
+        charlsberg.update(0.0f, 1.0f / 8.0f);
         input.dx = input.dy = 0;
     }
 
@@ -168,7 +172,7 @@ public class Window {
      * Use the renderer to draw to the window
      */
     public void render() {
-        renderer.render(camera);
+        renderer.render(camera, charlsberg);
 
         // Draw buffer to the screen
         glfwSwapBuffers(handle);
@@ -205,7 +209,7 @@ public class Window {
         Vector2i size = this.getSize();
 
         renderer.setViewport(size.x, size.y);
-        renderer.render(camera);
+        renderer.render(camera, charlsberg);
     }
 
     /**

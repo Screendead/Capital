@@ -1,6 +1,7 @@
 package com.screendead.capital.graphics;
 
 import com.screendead.capital.Texture;
+import com.screendead.capital.gameplay.Player;
 import com.screendead.capital.levels.Level;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL;
@@ -17,9 +18,9 @@ public class Renderer {
     /**
      * Render to the framebuffer
      */
-    public void render(Camera camera) {
+    public void render(Camera camera, Player player) {
         // Clear the framebuffer
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT);
 
         // Render the chunk mesh
         shader.bind();
@@ -27,8 +28,10 @@ public class Renderer {
         {
                 // Update the camera in the shader
                 shader.setUniform("transform", camera.matrix());
-
                 level.render();
+
+                shader.setUniform("transform", player.matrix());
+                player.render();
         }
         Texture.unbind();
         Shader.unbind();
@@ -47,13 +50,13 @@ public class Renderer {
 
         // Enable 2D texturing
         glEnable(GL_TEXTURE_2D);
-        glEnable(GL_DEPTH_TEST);
-        glEnable(GL_CULL_FACE);
+//        glEnable(GL_DEPTH_TEST);
+//        glEnable(GL_CULL_FACE);
         glEnable(GL_BLEND);
         glEnable(GL_MULTISAMPLE);
 
         // OpenGL settings
-        glCullFace(GL_BACK);
+//        glCullFace(GL_FRONT);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         // Create texture and shader

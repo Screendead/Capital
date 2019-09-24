@@ -20,7 +20,7 @@ import static org.lwjgl.opengl.GL14.GL_TEXTURE_LOD_BIAS;
 import static org.lwjgl.opengl.GL30.glGenerateMipmap;
 
 public class Texture {
-    public static int SIZE = 32;
+    public static int SIZE = 16; // The number of subtextures along each edge - NOT the width of the subtextures in pixels
     private int id, width, height;
     private ByteBuffer raw_image;
 

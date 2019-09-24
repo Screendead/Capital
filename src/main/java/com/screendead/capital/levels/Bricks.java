@@ -14,7 +14,9 @@ public enum Bricks {
     WALL_TOP_RIGHT(true, 3, 2),       // 6
     WALL_BOTTOM_RIGHT(true, 4, 2),    // 7
     WALL_BOTTOM_LEFT(true, 5, 2),     // 8
-    ROCK(true, 1, 2);                 // 9
+    ROCK(true, 1, 2),                 // 9
+
+    PLAYER(true, 7, 1);
 
     private boolean solid;
     private int x, y;
