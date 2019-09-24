@@ -21,15 +21,13 @@ public class Renderer {
         // Clear the framebuffer
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // Update the camera in the shader
-        shader.bind();
-        shader.setUniform("transform", camera.matrix());
-        Shader.unbind();
-
         // Render the chunk mesh
         shader.bind();
         TEXTURE.bind();
         {
+                // Update the camera in the shader
+                shader.setUniform("transform", camera.matrix());
+
                 level.render();
         }
         Texture.unbind();
