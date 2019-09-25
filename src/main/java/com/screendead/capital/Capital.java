@@ -2,18 +2,12 @@ package com.screendead.capital;
 
 import com.screendead.capital.graphics.Window;
 
-import javax.swing.*;
-
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 
 public class Capital {
     private Window window;
-    private float UPS = 60.0f, FPS = 60.0f;
+    public static float UPS = 60.0f, FPS = 60.0f;
 
     /**
      * Begin the game

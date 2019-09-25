@@ -9,7 +9,8 @@ import org.joml.Vector2f;
 public class Player {
     private static float SPEED = 1.0f / 1024.0f;
     private Vector2f pos, vel, acc;
-    private Mesh mesh;
+    private Mesh[] meshes = new Mesh[4];
+    private int mesh;
     private Matrix4f transform;
 
     public Player() {
@@ -17,7 +18,12 @@ public class Player {
         this.vel = new Vector2f();
         this.acc = new Vector2f();
 
-        this.mesh = Mesh.generate(new Brick[] { Brick.generate(Bricks.PLAYER, 0, 0) });
+        this.meshes[0] = Mesh.generate(new Brick[] { Brick.generate(Bricks.PLAYER_FRONT, 0, 0) });
+        this.meshes[1] = Mesh.generate(new Brick[] { Brick.generate(Bricks.PLAYER_BACK, 0, 0) });
+        this.meshes[2] = Mesh.generate(new Brick[] { Brick.generate(Bricks.PLAYER_LEFT, 0, 0) });
+        this.meshes[3] = Mesh.generate(new Brick[] { Brick.generate(Bricks.PLAYER_RIGHT, 0, 0) });
+
+        this.mesh = 0;
 
         update();
     }
@@ -50,12 +56,28 @@ public class Player {
      * @param h The horizontal aspect of movement
      * @param v The vertical aspect of movement
      */
-    public void move(int h, int v) {
+    public void move(float h, float v) {
         this.acc.add(h * SPEED, v * SPEED);
+
+//        if (h != 0.0f) {
+            if (v < 0.0f) this.mesh = 1;
+            if (v > 0.0f) this.mesh = 0;
+//        } else if (v != 0.0f) {
+            if (h < 0.0f) this.mesh = 2;
+            if (h > 0.0f) this.mesh = 3;
+//        }
     }
 
     public void render() {
-        this.mesh.render();
+        this.meshes[mesh].render();
+    }
+
+    public Vector2f getPos() {
+        return new Vector2f(pos.x, pos.y);
+    }
+
+    public Vector2f getVel() {
+        return new Vector2f(vel.x, vel.y);
     }
 
     public Matrix4f matrix() {

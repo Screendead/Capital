@@ -53,7 +53,7 @@ public class Level {
     }
 
     public void render() {
-        mesh.render();
+        this.mesh.render();
     }
 
     /**

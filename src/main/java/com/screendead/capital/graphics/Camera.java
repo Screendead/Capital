@@ -55,7 +55,7 @@ public class Camera {
      * @param h The horizontal aspect of movement
      * @param v The vertical aspect of movement
      */
-    public void move(int h, int v) {
+    public void move(float h, float v) {
         this.acc.add(h * SPEED, v * SPEED);
     }
 

@@ -1,6 +1,5 @@
 package com.screendead.capital.graphics;
 
-import com.screendead.capital.Texture;
 import com.screendead.capital.levels.Brick;
 import org.lwjgl.system.MemoryUtil;
 
@@ -96,8 +95,6 @@ public class Mesh {
         glBindVertexArray(0);
         glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);
-
-        Texture.unbind();
     }
 
     /**

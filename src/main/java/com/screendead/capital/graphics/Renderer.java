@@ -1,10 +1,13 @@
 package com.screendead.capital.graphics;
 
 import com.screendead.capital.Texture;
+import com.screendead.capital.gameplay.Brojectile;
 import com.screendead.capital.gameplay.Player;
 import com.screendead.capital.levels.Level;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL;
+
+import java.util.ArrayList;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.GL_MULTISAMPLE;
@@ -18,7 +21,7 @@ public class Renderer {
     /**
      * Render to the framebuffer
      */
-    public void render(Camera camera, Player player) {
+    public void render(Camera camera, Player player, ArrayList<Brojectile> brojectiles) {
         // Clear the framebuffer
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -32,6 +35,11 @@ public class Renderer {
 
                 shader.setUniform("transform", player.matrix());
                 player.render();
+
+                brojectiles.forEach(brojectile -> {
+                    shader.setUniform("transform", brojectile.matrix());
+                    brojectile.render();
+                });
         }
         Texture.unbind();
         Shader.unbind();
