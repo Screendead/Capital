@@ -1,12 +1,14 @@
 package com.screendead.capital.graphics;
 
+import com.screendead.capital.gameplay.Moveable;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 
-public class Camera {
+public class Camera implements Moveable {
     Vector2f pos, vel, acc;
     private static float SPEED = 1.0f / 256.0f;
-    private float width, height, aspect;
+    private float width, height, aspect, zoom;
+    private float damping;
     private Matrix4f transform = new Matrix4f();
 
     public Camera(float width, float height) {
@@ -22,6 +24,8 @@ public class Camera {
         this.vel = new Vector2f();
         this.acc = new Vector2f();
 
+        this.damping = 0.9f;
+
         update();
     }
 
@@ -33,35 +37,45 @@ public class Camera {
         update(r, s, s);
     }
 
-    /**
-     * Set the transformation matrix for the shader
-     * Rotation order is YXZ
-     * @param r Degrees of rotation about the Z axis
-     * @param sx X component of the scale
-     * @param sy Y component of the scale
-     */
-    public void update(float r, float sx, float sy) {
+    @Override
+    public void updatePosition() {
         this.vel.add(acc);
         this.pos.add(vel);
-        this.vel.mul(0.9f);
         this.acc.zero();
-
-        this.transform = new Matrix4f().translation(-pos.x, -pos.y, 0.0f)
-                .rotateYXZ(0.0f, 0.0f, (float) Math.toRadians(r))
-                .scale(sx, sy, 1.0f);
+        this.vel.mul(this.damping);
     }
 
-    /**
-     * @param h The horizontal aspect of movement
-     * @param v The vertical aspect of movement
-     */
+    @Override
+    public void move(float h, float v, int direction) { }
+
+    @Override
+    public void setSpeed(float s) { }
+
+    @Override
+    public void setScale(float s) {
+        this.zoom = s;
+    }
+
+    @Override
+    public Vector2f getPos() {
+        return pos;
+    }
+
+    @Override
+    public Vector2f getVel() {
+        return vel;
+    }
+
+    @Override
+    public void updateTransform(float r, float sx, float sy) {
+        this.transform = new Matrix4f().translation(zoom / 2.0f - pos.x, zoom / 2.0f - pos.y, 0.0f)
+            .rotateYXZ(0.0f, 0.0f, (float) Math.toRadians(r))
+            .scale(sx * zoom, sy * zoom, 1.0f);
+    }
+
     public void move(float h, float v) {
         this.acc.add(h * SPEED, v * SPEED);
     }
-
-//    private float constrain(float f, float min, float max) {
-//        return Math.min(Math.max(f, min), max);
-//    }
 
     public Matrix4f matrix() {
         return this.transform;

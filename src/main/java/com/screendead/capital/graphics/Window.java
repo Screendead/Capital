@@ -4,6 +4,8 @@ import com.screendead.capital.Capital;
 import com.screendead.capital.Input;
 import com.screendead.capital.Texture;
 import com.screendead.capital.gameplay.Brojectile;
+import com.screendead.capital.gameplay.Entity;
+import com.screendead.capital.gameplay.Moveable;
 import com.screendead.capital.gameplay.Player;
 import org.joml.Vector2i;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -149,25 +151,29 @@ public class Window {
             this.toggleFullscreen();
 
         if (key(GLFW_KEY_W))
-            charlsberg.move(0.0f, -1.0f);
+            charlsberg.move(0.0f, -1.0f, input.last_move);
         if (key(GLFW_KEY_A))
-            charlsberg.move(-1.0f, 0.0f);
+            charlsberg.move(-1.0f, 0.0f, input.last_move);
         if (key(GLFW_KEY_S))
-            charlsberg.move(0.0f, 1.0f);
+            charlsberg.move(0.0f, 1.0f, input.last_move);
         if (key(GLFW_KEY_D))
-            charlsberg.move(1.0f, 0.0f);
+            charlsberg.move(1.0f, 0.0f, input.last_move);
+
         if (key(GLFW_KEY_SPACE) && cooldown == 0) {
-            brojectiles.add(new Brojectile(charlsberg.getPos(), charlsberg.getVel()));
-            cooldown = (int) (Capital.UPS / 10.0f);
+            brojectiles.add(new Brojectile(charlsberg.getPos(), charlsberg.getVel(), input.last_move));
+            cooldown = (int) (Capital.UPS / 2.0f);
         }
 //        if (key(GLFW_KEY_LEFT_SHIFT))
 
 //        camera.update(0.0f, 1.0f / 8.0f * ((float) Math.sin(ticks / 6.0f) / 25.0f + 1.0f), 1.0f / 8.0f * ((float) Math.cos(ticks / 5.0f) / 25.0f + 1.0f));
-        camera.update(0.0f, 1.0f / 8.0f);
-        charlsberg.update(0.0f, 1.0f / 6.0f);
-        brojectiles.forEach(brojectile -> brojectile.update(0.0f, 1.0f / 16.0f));
+        camera.setScale(1.0f / 8.0f);
+        camera.update();
+        charlsberg.update();
+        brojectiles.forEach(Moveable::update);
         input.dx = input.dy = 0;
         cooldown = Math.max(cooldown - 1, 0);
+
+        Entity.TICKS = ticks;
     }
 
     /**

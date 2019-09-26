@@ -1,6 +1,7 @@
 package com.screendead.capital.graphics;
 
 import com.screendead.capital.levels.Brick;
+import com.screendead.capital.levels.Bricks;
 import org.lwjgl.system.MemoryUtil;
 
 import java.nio.FloatBuffer;
@@ -78,6 +79,24 @@ public class Mesh {
         }
 
         return new Mesh(v, t, i);
+    }
+
+    public static Mesh[] generate(Bricks[] bricks) {
+        Mesh[] out = new Mesh[bricks.length];
+
+        for (int i = 0; i < out.length; i++) {
+            out[i] = Mesh.generate(bricks[i]);
+        }
+
+        return out;
+    }
+
+    public static Mesh generate(Bricks bricks) {
+        return Mesh.generate(Brick.generate(bricks, 0.0f, 0.0f));
+    }
+
+    public static Mesh generate(Brick brick) {
+        return new Mesh(brick.vertices, brick.texture, Brick.INDICES);
     }
 
     /**

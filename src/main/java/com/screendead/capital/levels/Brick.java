@@ -7,10 +7,10 @@ public class Brick {
     public static final int INDICES_LENGTH = 6;
 
     private static final float[] VERTICES = new float[] {
-            0.0f, 0.0f,
-            0.0f, 1.0f,
-            1.0f, 0.0f,
-            1.0f, 1.0f,
+            -0.5f, -0.5f,
+            -0.5f,  0.5f,
+             0.5f, -0.5f,
+             0.5f,  0.5f,
     };
     public static final int[] INDICES = new int[] {
             0, 1, 2,

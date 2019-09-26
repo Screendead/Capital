@@ -1,16 +1,17 @@
 package com.screendead.capital;
 
-import static org.lwjgl.glfw.GLFW.*;
-
 import com.screendead.capital.graphics.Window;
 import org.joml.Vector2i;
 import org.lwjgl.glfw.*;
+
+import static org.lwjgl.glfw.GLFW.*;
 
 public class Input {
     public boolean[] keys = new boolean[68836];
     public boolean[] mods = new boolean[68836];
 
     public float x, y, dx, dy;
+    public int last_move;
 
     private GLFWWindowSizeCallback windowSizeCallback;
     private GLFWCursorPosCallback cursorPosCallback;
@@ -42,6 +43,11 @@ public class Input {
     private void onKeyPress(int key, int scancode, int mod) {
         keys[key] = true;
         mods[mod] = true;
+
+        if (key == GLFW_KEY_W) last_move = 0; // Up
+        if (key == GLFW_KEY_A) last_move = 1; // Left
+        if (key == GLFW_KEY_S) last_move = 2; // Down
+        if (key == GLFW_KEY_D) last_move = 3; // Right
     }
 
     private void onKeyRelease(int key, int scancode, int mod) {
