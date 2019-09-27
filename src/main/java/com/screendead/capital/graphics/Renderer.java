@@ -1,8 +1,8 @@
 package com.screendead.capital.graphics;
 
 import com.screendead.capital.Texture;
-import com.screendead.capital.gameplay.Brojectile;
-import com.screendead.capital.gameplay.Player;
+import com.screendead.capital.gameplay.entities.Player;
+import com.screendead.capital.gameplay.entities.Projectile;
 import com.screendead.capital.levels.Level;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL;
@@ -21,7 +21,7 @@ public class Renderer {
     /**
      * Render to the framebuffer
      */
-    public void render(Camera camera, Player player, ArrayList<Brojectile> brojectiles) {
+    public void render(Camera camera, Player player, ArrayList<Projectile> brojectiles) {
         // Clear the framebuffer
         glClear(GL_COLOR_BUFFER_BIT);
 

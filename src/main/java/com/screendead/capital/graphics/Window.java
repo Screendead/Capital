@@ -3,10 +3,11 @@ package com.screendead.capital.graphics;
 import com.screendead.capital.Capital;
 import com.screendead.capital.Input;
 import com.screendead.capital.Texture;
-import com.screendead.capital.gameplay.Brojectile;
-import com.screendead.capital.gameplay.Entity;
 import com.screendead.capital.gameplay.Moveable;
-import com.screendead.capital.gameplay.Player;
+import com.screendead.capital.gameplay.entities.Entity;
+import com.screendead.capital.gameplay.entities.Laser;
+import com.screendead.capital.gameplay.entities.Player;
+import com.screendead.capital.gameplay.entities.Projectile;
 import org.joml.Vector2i;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWImage;
@@ -30,7 +31,7 @@ public class Window {
     private int vsync;
     private Camera camera;
     private Player charlsberg;
-    private ArrayList<Brojectile> brojectiles = new ArrayList<>();
+    private ArrayList<Projectile> lasers = new ArrayList<>();
     private int cooldown = 0;
 
     public Window(String title, int width, int height, boolean isFullscreen, boolean vsyncEnabled) {
@@ -160,7 +161,7 @@ public class Window {
             charlsberg.move(1.0f, 0.0f, input.last_move);
 
         if (key(GLFW_KEY_SPACE) && cooldown == 0) {
-            brojectiles.add(new Brojectile(charlsberg.getPos(), charlsberg.getVel(), input.last_move));
+            lasers.add(new Laser(charlsberg.getPos(), charlsberg.getVel(), input.last_move));
             cooldown = (int) (Capital.UPS / 2.0f);
         }
 //        if (key(GLFW_KEY_LEFT_SHIFT))
@@ -169,7 +170,7 @@ public class Window {
         camera.setScale(1.0f / 8.0f);
         camera.update();
         charlsberg.update();
-        brojectiles.forEach(Moveable::update);
+        lasers.forEach(Moveable::update);
         input.dx = input.dy = 0;
         cooldown = Math.max(cooldown - 1, 0);
 
@@ -188,7 +189,7 @@ public class Window {
      * Use the renderer to draw to the window
      */
     public void render() {
-        renderer.render(camera, charlsberg, brojectiles);
+        renderer.render(camera, charlsberg, lasers);
 
         // Draw buffer to the screen
         glfwSwapBuffers(handle);
@@ -225,7 +226,7 @@ public class Window {
         Vector2i size = this.getSize();
 
         renderer.setViewport(size.x, size.y);
-        renderer.render(camera, charlsberg, brojectiles);
+        renderer.render(camera, charlsberg, lasers);
     }
 
     /**

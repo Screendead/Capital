@@ -1,5 +1,6 @@
-package com.screendead.capital.gameplay;
+package com.screendead.capital.gameplay.entities;
 
+import com.screendead.capital.gameplay.Moveable;
 import com.screendead.capital.graphics.Mesh;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -21,15 +22,9 @@ public abstract class Entity implements Moveable {
         this.pos.add(vel);
         this.acc.zero();
         this.vel.mul(this.damping);
-
-        if (this.vel.length() < 0.001f) this.vel.zero();
     }
 
-    public void updateTransform(float r, float sx, float sy) {
-        this.transform = new Matrix4f().translation(pos.x, pos.y, 0.0f)
-                .rotateYXZ(0.0f, 0.0f, (float) Math.toRadians(r + this.rotation))
-                .scale(sx * scale, sy * scale, 1.0f);
-    }
+    public void move(float h, float v, int direction) { }
 
     public void setSpeed(float s) {
         this.speed = s;
@@ -49,6 +44,12 @@ public abstract class Entity implements Moveable {
 
     public Vector2f getVel() {
         return new Vector2f(vel.x, vel.y);
+    }
+
+    public void updateTransform(float r, float sx, float sy) {
+        this.transform = new Matrix4f().translation(pos.x, pos.y, 0.0f)
+                .rotateYXZ(0.0f, 0.0f, (float) Math.toRadians(r + this.rotation))
+                .scale(sx * scale, sy * scale, 1.0f);
     }
 
     public Matrix4f matrix() {

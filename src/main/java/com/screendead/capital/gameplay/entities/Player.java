@@ -1,4 +1,4 @@
-package com.screendead.capital.gameplay;
+package com.screendead.capital.gameplay.entities;
 
 import com.screendead.capital.graphics.Mesh;
 import com.screendead.capital.levels.Bricks;
