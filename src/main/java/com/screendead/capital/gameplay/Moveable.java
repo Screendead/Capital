@@ -7,10 +7,18 @@ public interface Moveable {
     int TICKS = 0;
     float speed = 0;
 
+
+    /**
+     * Update physics-related values
+     */
     default void update() {
         update(0.0f, 1.0f);
     }
 
+
+    /**
+     * Update physics-related values
+     */
     default void update(float r, float s) {
         update(r, s, s);
     }

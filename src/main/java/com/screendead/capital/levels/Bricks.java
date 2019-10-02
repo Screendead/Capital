@@ -24,7 +24,9 @@ public enum Bricks {
     LASER_DOWN(true, 8, 1),
     LASER_UP(true, 9, 2),
     LASER_LEFT(true, 8, 2),
-    LASER_RIGHT(true, 9, 1);
+    LASER_RIGHT(true, 9, 1),
+
+    PAPER_BALL(true, 10, 1);
 
     private boolean solid;
     private int x, y;

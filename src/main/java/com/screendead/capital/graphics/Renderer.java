@@ -1,6 +1,7 @@
 package com.screendead.capital.graphics;
 
 import com.screendead.capital.Texture;
+import com.screendead.capital.gameplay.entities.Entity;
 import com.screendead.capital.gameplay.entities.Player;
 import com.screendead.capital.gameplay.entities.Projectile;
 import com.screendead.capital.levels.Level;
@@ -21,7 +22,7 @@ public class Renderer {
     /**
      * Render to the framebuffer
      */
-    public void render(Camera camera, Player player, ArrayList<Projectile> brojectiles) {
+    public void render(Camera camera, Player player, ArrayList<Entity> entities) {
         // Clear the framebuffer
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -36,9 +37,9 @@ public class Renderer {
                 shader.setUniform("transform", player.matrix());
                 player.render();
 
-                brojectiles.forEach(brojectile -> {
-                    shader.setUniform("transform", brojectile.matrix());
-                    brojectile.render();
+                entities.forEach(entity -> {
+                        shader.setUniform("transform", entity.matrix());
+                        entity.render();
                 });
         }
         Texture.unbind();
